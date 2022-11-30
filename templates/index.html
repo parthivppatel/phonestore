@@ -1,0 +1,731 @@
+<!DOCTYPE html>
+<html lang="en">
+  {% load static %}
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+  <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
+
+
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
+</head>
+
+<body>
+  <!--Main Navigation-->
+  <header class="mb-5">
+    <!-- Jumbotron -->
+    <div class="p-3 text-center text-white" style="background-color: #000000">
+      <div class="container">
+        <div class="row">
+          <div class="col-md-1 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0 mt-1">
+            <a href="#!" class="ms-md-2">
+              <img src="../static/images/myphone.jpg" height="40" />
+            </a>
+          </div>
+          <div class="col-md-3 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <ul class="navbar-nav mx-auto">
+              <li class="nav-item dropdown">
+                <a class="nav-link dropdown" href="#" data-bs-toggle="dropdown" style="border-top: 0;color: white;"><img
+                    src="../static/images/hamburger.png" width="18" class="mb-1 mx-2">Categories </a>
+                <ul class="dropdown-menu">
+                  <li><a class="dropdown-item" href="#oppo"> Oppo </a></li>
+                  <li><a class="dropdown-item" href="#budget"> Vivo </a></li>
+                  <li><a class="dropdown-item" href="#budget"> Nokia </a></li>
+                  <li><a class="dropdown-item" href="#realme"> Realme </a></li>
+                  <li><a class="dropdown-item" href="#apple"> Apple</a></li>
+                  <li><a class="dropdown-item" href="#budget"> Redmi </a></li>
+                  <li><a class="dropdown-item" href="#budget"> OnePlus </a></li>
+                </ul>
+              </li>
+            </ul>
+          </div>
+          <div class="col-md-4 ">
+            <form class="d-flex input-group w-auto my-auto mb-3 mb-md-0">
+              <input autocomplete="off" type="search" class="form-control" placeholder="Search" />
+              <!-- <span class="input-group-text border-0 d-none d-lg-flex"><i class="fas fa-search text-white"></i></span> -->
+              <button class="btn btn-outline-warning" type="submit">Search</button>
+            </form>
+          </div>
+          <div class="col-md-3 d-flex justify-content-center justify-content-md-end align-items-center">
+            <div class="d-flex">
+              <!-- Cart -->
+              <a href="cart"><img src="../static/images/shopping-cart.png" width="35"></a>
+              <span class="position-absolute top-1 start-95 translate-middle badge rounded-pill bg-danger"
+                style="margin-left: 35px;">
+                2
+                <span class="visually-hidden">unread messages</span>
+              </span>
+            </div>
+          </div>
+          <div class="col-md-1 d-flex justify-content-center justify-content-md-start mb-3 mb-md-0">
+            <a href="#"><img src="../static/images/user-interface.png" class="mt-1 mx-3" alt="" width="35" height="35"></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </header>
+  <main>
+    <!-- carousel code -->
+    <div id="carouselExampleInterval" class="carousel slide" data-bs-ride="carousel">
+      <div class="carousel-inner">
+        <div class="carousel-item active" data-bs-interval="3000">
+          <img src="../static/images/oppo.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="../static/images/realme.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="../static/images/one.jpg" class="d-block w-100" alt="...">
+        </div>
+        <div class="carousel-item" data-bs-interval="3000">
+          <img src="../static/images/redmi.jpg" class="d-block w-100 h-10" alt="...">
+        </div>
+      </div>
+      <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleInterval"
+        data-bs-slide="prev">
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleInterval"
+        data-bs-slide="next">
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+
+    <!-- content code -->
+    <div class="p-3">
+      <!-- section code -->
+      <div class="p-4 mt-5" style="background-color:rgb(187, 235, 29);">
+        <!-- realme section -->
+        <div class="bg-white p-3 rounded-top">
+          <p class="fw-bolder fs-2 ms-4 mb-2 text-center" id="realme">Realme</p>
+        </div>
+        <div class="p-4 rounded-bottom" style="background-color:rgb(240, 240, 240);">
+          <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re2.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1 mb-4">
+            <div class="col">
+              {% csrf_token %}
+              <form action="" method="POST">
+                <input type="hidden" value="5" name="id" />
+                <button class="btn btn-danger d-flex mx-auto" type="submit">Add To
+                  Cart</button>
+              </form>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+          <div class="row row-cols-1 row-cols-md-5 g-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re7.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re8.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re9.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re10.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re6.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1">
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+        </div>
+        <!-- oppo section -->
+        <div class="mt-4">
+          <div class="bg-white p-3 rounded-top">
+            <p class="fw-bolder fs-2 ms-4 mb-2 text-center" id="oppo">OPPO</p>
+          </div>
+          <div class="p-4 rounded-bottom" style="background-color:rgb(240, 240, 240);">
+            <div class="row row-cols-1 row-cols-md-5 g-4">
+              <div class="col">
+                <div class="card h-100 border-0">
+                  <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                      additional
+                      content. This content is a little bit longer.</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 border-0">
+                  <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a short card.</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 border-0">
+                  <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                      additional
+                      content.</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 border-0">
+                  <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                      additional
+                      content. This content is a little bit longer.</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+              <div class="col">
+                <div class="card h-100 border-0">
+                  <img src="../static/images/re2.jpg" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h5 class="card-title">Card title</h5>
+                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                      additional
+                      content. This content is a little bit longer.</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+            </div>
+            {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1">
+              <div class="col">
+                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button>
+              </div>
+              <div class="col">
+                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button>
+              </div>
+            </div> {% endcomment %}
+          </div>
+        </div>
+      </div>
+       
+      <!-- budget section -->
+      <div class="p-4 mt-5" style="background-color:rgb(187, 235, 29);">
+        <div class="bg-white p-3 rounded-top">
+          <p class="fw-bolder fs-2 ms-4 mb-2 text-center" id="budget">Budget Smartphones</p>
+        </div>
+        <div class="p-4 rounded-bottom" style="background-color:rgb(240, 240, 240);">
+          <div class="row row-cols-1 row-cols-md-6 g-4 mb-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-6 g-4 mt-1 mb-4">
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+          <div class="row row-cols-1 row-cols-md-4 g-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+        </div>
+
+      </div>
+      <!-- premium section -->
+      <div class="p-4 mt-5" style="background-color:rgb(187, 235, 29);">
+        <div class="bg-white p-3 rounded-top">
+          <p class="fw-bolder fs-2 ms-4 mb-2 text-center" id="apple">Premium Smartphones</p>
+        </div>
+        <div class="p-4 rounded-bottom" style="background-color:rgb(240, 240, 240);">
+          <div class="row row-cols-1 row-cols-md-3 g-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a short card.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone6.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-4">
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+          <div class="row row-cols-1 row-cols-md-3 g-4 mt-1 mb-4">
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone1.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone6.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content. This content is a little bit longer.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card h-100 border-0">
+                <img src="../static/images/iphone3.jpg" class="card-img-top" alt="...">
+                <div class="card-body">
+                  <h5 class="card-title">Card title</h5>
+                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
+                    additional
+                    content.</p>
+                </div>
+                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                  Cart</button></div>
+              </div>
+            </div>
+          </div>
+          {% comment %} <div class="row row-cols-1 row-cols-md-3 g-4 mt-1 mb-1">
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+            <div class="col">
+              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                Cart</button>
+            </div>
+          </div> {% endcomment %}
+      </div>
+
+    </div>
+    </div>
+
+  </main>
+  <!--Main Navigation-->
+  <!-- footer -->
+  <footer class="bg-dark text-center text-white">
+    <!-- Grid container -->
+    <div class="container p-4 pb-0">
+      <!-- Section: Social media -->
+      <section class="mb-2">
+        <!-- Facebook -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+          ><img src="../static/images/facebook.png" alt="" width="40"></a>
+  
+        <!-- Twitter -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        ><img src="../static/images/twitter.png" alt="" width="40"></a></a>
+  
+        <!-- whatspp -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        ><img src="../static/images/whatsapp.png" alt="" width="40"></a></a>
+  
+        <!-- Instagram -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        ><img src="../static/images/instagram.png" alt="" width="40"></a></a>
+  
+        <!-- Linkedin -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        ><img src="../static/images/linkedin.png" alt="" width="40"></a></a>
+  
+        <!-- Github -->
+        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        ><img src="../static/images/github.png" alt="" width="40"></a></a>
+      </section>
+      <!-- Section: Social media -->
+    </div>
+    <!-- Grid container -->
+  
+    <!-- Copyright -->
+    <div class="text-center p-3" style="background-color: rgba(0, 0, 0, 0.2);">
+      © 2020 Copyright: MyPhone
+    </div>
+    <!-- Copyright -->
+  </footer>
+</body>
+
+</html>
