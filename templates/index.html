@@ -106,202 +106,32 @@
           <p class="fw-bold fs-3 ms-4  text-start border-bottom d-inline border-info border-3" id="realme" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Realme</p>
         </div>
         <div class="p-3 mt-3 rounded-bottom">
-          <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h6 class="card-title fs-4">Realme Narzo 50i</h6>
-                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
-                    ₹ 27,999/-<br></P>
-                   <P>
-                    &#10003; Android 11<br>&#10003; 4G<br>&#10003; 2 GB RAM | 32 GB ROM <br>&#10003; 16.51 cm (6.5 inch) HD+ Display
-                    {% comment %} <ul>
-                    <li><span class="fs-6 fw-normal">Android 11</span><br></li>
-                    <li> 
-                      <span class="fs-6 fw-normal">4G</span><br>  
-                    </li>
-                    <li>
-                      <span class="fs-6 fw-normal">2 GB RAM | 32 GB ROM</span><br>
-                    </li>
-                    <li>
-                      <span class="fs-6 fw-normal">16.51 cm (6.5 inch) HD+ Display</span>
-                    </li>
-                   </ul> {% endcomment %}
-                  </p>
 
-                  <p class="card-text">
-                    Inclusive of All Taxes<br>
-                    EMI starts at ₹358 Per Month.</p>
+          {% for i in object %}
+            <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+              {% for j in i%}
+               {% if j.brand == 'realme' %}
+              <div class="col">
+                <div class="card h-100 shadow border">
+                  <img src="{{j.img}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h6 class="card-title fs-4">{{j.name}}</h6>
+                    <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                      ₹{{j.price}}/-<br></P>
+                     <P>
+                      &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                    </p> 
+                    <p class="card-text">
+                     {{j.description}}</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
+                    Cart</button></div>
                 </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
               </div>
+               {% endif %} 
+              {%endfor%}
             </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re2.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-          </div>
-          {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1 mb-4">
-            <div class="col">
-              {% csrf_token %}
-              <form action="" method="POST">
-                <input type="hidden" value="5" name="id" />
-                <button class="btn btn-danger d-flex mx-auto" type="submit">Add To
-                  Cart</button>
-              </form>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-          </div> {% endcomment %}
-          <div class="row row-cols-1 row-cols-md-5 g-4">
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re7.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re8.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re9.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re10.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-          </div>
-          {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1">
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-          </div> {% endcomment %}
+          {%endfor%}
         </div>
       </div>
 
@@ -313,93 +143,31 @@
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="oppo" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">OPPO</p>
         </div>
           <div class="p-3 mt-3 rounded-bottom">
-            <div class="row row-cols-1 row-cols-md-5 g-4">
+          {% for i in object %}
+            <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+              {% for j in i%}
+               {% if j.brand == 'oppo' %}
               <div class="col">
                 <div class="card h-100 shadow border">
-                  <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                  <img src="{{j.img}}" class="card-img-top" alt="...">
                   <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                      additional
-                      content. This content is a little bit longer.</p>
+                    <h6 class="card-title fs-4">{{j.name}}</h6>
+                    <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                      ₹{{j.price}}/-<br></P>
+                     <P>
+                      &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                    </p> 
+                    <p class="card-text">
+                     {{j.description}}</p>
                   </div>
                   <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
                     Cart</button></div>
                 </div>
               </div>
-              <div class="col">
-                <div class="card h-100  shadow border">
-                  <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a short card.</p>
-                  </div>
-                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                    Cart</button></div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100 shadow border">
-                  <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                      additional
-                      content.</p>
-                  </div>
-                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                    Cart</button></div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100  shadow border">
-                  <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                      additional
-                      content. This content is a little bit longer.</p>
-                  </div>
-                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                    Cart</button></div>
-                </div>
-              </div>
-              <div class="col">
-                <div class="card h-100  shadow border">
-                  <img src="../static/images/re2.jpg" class="card-img-top" alt="...">
-                  <div class="card-body">
-                    <h5 class="card-title">Card title</h5>
-                    <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                      additional
-                      content. This content is a little bit longer.</p>
-                  </div>
-                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                    Cart</button></div>
-                </div>
-              </div>
+               {% endif %} 
+              {%endfor%}
             </div>
-            {% comment %} <div class="row row-cols-1 row-cols-md-5 g-4 mt-1">
-              <div class="col">
-                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button>
-              </div>
-              <div class="col">
-                <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button>
-              </div>
-            </div> {% endcomment %}
+          {%endfor%}
           </div>
       </div>
        
@@ -410,180 +178,57 @@
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="budget" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Budget Smartphones</p>
         </div>
         <div class="p-3 mt-3 rounded-bottom">
-          <div class="row row-cols-1 row-cols-md-6 g-4 mb-4">
+          {% for i in object %}
+          <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+            {% for j in i%}
+            {% if j.brand == 'vivo' or j.brand == 'nokia' or j.brand == 'redmi' %}
             <div class="col">
               <div class="card h-100 shadow border">
-                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <img src="{{j.img}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
+                  <h6 class="card-title fs-4">{{j.name}}</h6>
+                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                    ₹{{j.price}}/-<br></P>
+                   <P>
+                    &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                  </p> 
+                  <p class="card-text">
+                   {{j.description}}</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
                   Cart</button></div>
               </div>
             </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
+            {% endif%}
+            {% endfor%}
           </div>
-          {% comment %} <div class="row row-cols-1 row-cols-md-6 g-4 mt-1 mb-4">
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-          </div> {% endcomment %}
-          <div class="row row-cols-1 row-cols-md-4 g-4">
+          
+          
+          <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
+            {% for j in i%}
+            {% if j.brand == 'plus' %}
             <div class="col">
               <div class="card h-100 shadow border">
-                <img src="../static/images/re1.jpg" class="card-img-top" alt="...">
+                <img src="{{j.img}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
+                  <h6 class="card-title fs-4">{{j.name}}</h6>
+                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                    ₹{{j.price}}/-<br></P>
+                   <P>
+                    &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                  </p> 
+                  <p class="card-text">
+                   {{j.description}}</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
                   Cart</button></div>
               </div>
             </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re5.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/re4.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
+            {% endif%}
+            {% endfor%}
           </div>
-          {% comment %} <div class="row row-cols-1 row-cols-md-4 g-4 mt-1">
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-          </div> {% endcomment %}
+          {% endfor%}
+          
         </div>
 
       </div>
@@ -595,100 +240,31 @@
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="apple" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Premium Smartphones</p>
         </div>
         <div class="p-3 mt-3 rounded-bottom">
+          {% for i in object %}
           <div class="row row-cols-1 row-cols-md-3 g-4">
+            {% for j in i%}
+            {% if j.brand == 'iphone' %}
             <div class="col">
               <div class="card h-100 shadow border">
-                <img src="../static/images/iphone1.jpg" class="card-img-top" alt="...">
+                <img src="{{j.img}}" class="card-img-top" alt="...">
                 <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
+                  <h6 class="card-title fs-4">{{j.name}}</h6>
+                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                    ₹{{j.price}}/-<br></P>
+                   <P>
+                    &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                  </p> 
+                  <p class="card-text">
+                   {{j.description}}</p>
                 </div>
                 <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
                   Cart</button></div>
               </div>
             </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/iphone3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a short card.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/iphone6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
+            {% endif%}
+            {% endfor%}
           </div>
-          {% comment %} <div class="row row-cols-1 row-cols-md-3 g-4 mt-3 mb-4">
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-            <div class="col">
-              <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                Cart</button>
-            </div>
-          </div> {% endcomment %}
-          <div class="row row-cols-1 row-cols-md-3 g-4 mt-1 mb-4">
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/iphone1.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/iphone6.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content. This content is a little bit longer.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="../static/images/iphone3.jpg" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h5 class="card-title">Card title</h5>
-                  <p class="card-text">This is a longer card with supporting text below as a natural lead-in to
-                    additional
-                    content.</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="button">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-          </div>
+          {% endfor%}
           {% comment %} <div class="row row-cols-1 row-cols-md-3 g-4 mt-1 mb-1">
             <div class="col">
               <button class="btn btn-primary d-flex mx-auto" type="button">Add To
