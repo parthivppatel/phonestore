@@ -5,5 +5,14 @@ from phone_app import views
 urlpatterns = [
     path('',views.home,name='home'),
     path('cart',views.cart,name='cart'),
-    path('home',views.home,name='home')
+    path('home',views.home,name='home'),
+    path('login',views.login,name='login'),
+    path('signup',views.signup,name='signup'),
+    path('register',views.register,name='register'),
+    path('logout',views.logout,name='logout'),
+    path('session',views.logout,name='session'),
+    path('email',views.email,name='email'),
+    path('forgot',views.forgot,name='forgot'),
+    path('reset',views.reset,name='reset'),
+    path('password',views.password,name='password'),
 ]

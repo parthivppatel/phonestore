@@ -48,6 +48,8 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'django.contrib.sessions.middleware.SessionMiddleware',
+    'django_session_timeout.middleware.SessionTimeoutMiddleware',
 ]
 
 ROOT_URLCONF = 'phonestore.urls'
@@ -69,6 +71,11 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'phonestore.wsgi.application'
+
+#for expire session
+SESSION_EXPIRE_SECONDS = 86400*7
+SESSION_EXPIRE_AFTER_LAST_ACTIVITY = True
+SESSION_TIMEOUT_REDIRECT = 'session'
 
 
 # Database
@@ -125,3 +132,10 @@ STATICFILES_DIRS=[
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_PORT= 587
+EMAIL_USE_TLS = True
+EMAIL_HOST_USER='patelparthiv798@gmail.com'
+EMAIL_HOST_PASSWORD='akdrmqulihzfrjtv'
