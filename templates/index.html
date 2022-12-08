@@ -53,10 +53,16 @@
           <div class="col-md-2 d-flex justify-content-center justify-content-md-end align-items-center">
             <div class="d-flex">
               <!-- Cart -->
-              <a href="cart"><img src="../static/images/shopping-cart.png" width="35"></a>
+              {% if user.is_authenticated%}
+              <a href="cart"><img src="../static/images/shopping-cart.svg" width="35"></a>
+              {% else %}
+              <a href="login"><img src="../static/images/shopping-cart.svg" width="35"></a>
+              {% endif %}
               <span class="position-absolute top-1 start-95 translate-middle badge rounded-pill bg-danger"
                 style="margin-left: 35px;">
-                2
+                {%for i in count_cart %}
+                {{i}}
+                {% endfor %}
                 <span class="visually-hidden">unread messages</span>
               </span>
             </div>
@@ -108,16 +114,10 @@
       </button>
     </div>
 
-
-    {% if user.is_authenticated %}
-    <form action="cart">
-      {%else%}
-      <form action="login">
-      {% endif%}
     <!-- content code -->
     <div class="p-5">
       <!-- section 1 -->
-      <div class="p-3 mt-4 " style="background-color:#eff4f8">
+      <div class="p-1 mt-4 " style="background-color:#eff4f8">
         <!-- realme section -->
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4  text-start border-bottom d-inline border-info border-3" id="realme" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Realme</p>
@@ -127,8 +127,17 @@
           {% for i in object %}
             <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
               {% for j in i%}
-               {% if j.brand == 'realme' %}
-              <div class="col">
+                {% if j.brand == 'realme' %}
+               
+                  {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
+                  
+                  <div class="col">    
                 <div class="card h-100 shadow border">
                   <img src="{{j.img}}" class="card-img-top" alt="...">
                   <div class="card-body">
@@ -146,6 +155,8 @@
                 </div>
               </div>
                {% endif %} 
+              </form>
+
               {%endfor%}
             </div>
           {%endfor%}
@@ -154,7 +165,7 @@
 
 
       <!-- section 2 -->
-      <div class="p-3 mt-5 " style="background-color:#eff4f8">
+      <div class="p-1 mt-5 " style="background-color:#eff4f8">
         <!-- oppo section -->
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="oppo" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">OPPO</p>
@@ -164,6 +175,13 @@
             <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
               {% for j in i%}
                {% if j.brand == 'oppo' %}
+                  {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
               <div class="col">
                 <div class="card h-100 shadow border">
                   <img src="{{j.img}}" class="card-img-top" alt="...">
@@ -181,6 +199,7 @@
                     Cart</button></div>
                 </div>
               </div>
+                 </form>
                {% endif %} 
               {%endfor%}
             </div>
@@ -189,16 +208,23 @@
       </div>
        
       <!-- section 3 -->
-      <div class="p-3 mt-5" style="background-color:#eff4f8">
+      <div class="p-1 mt-5" style="background-color:#eff4f8">
         <!-- budget section -->
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="budget" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Budget Smartphones</p>
         </div>
-        <div class="p-3 mt-3 rounded-bottom">
+        <div class="p-3 rounded-bottom">
           {% for i in object %}
           <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
             {% for j in i%}
             {% if j.brand == 'vivo' or j.brand == 'nokia' or j.brand == 'redmi' %}
+                  {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
             <div class="col">
               <div class="card h-100 shadow border">
                 <img src="{{j.img}}" class="card-img-top" alt="...">
@@ -217,13 +243,20 @@
               </div>
             </div>
             {% endif%}
+            <form>
             {% endfor%}
           </div>
-          
           
           <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
             {% for j in i%}
             {% if j.brand == 'plus' %}
+            {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
             <div class="col">
               <div class="card h-100 shadow border">
                 <img src="{{j.img}}" class="card-img-top" alt="...">
@@ -241,6 +274,7 @@
                   Cart</button></div>
               </div>
             </div>
+          </form>
             {% endif%}
             {% endfor%}
           </div>
@@ -251,16 +285,23 @@
       </div>
 
       <!-- section 4 -->
-      <div class="p-3 mt-5" style="background-color:#eff4f8">
+      <div class="p-1 mt-5" style="background-color:#eff4f8">
         <!-- premium section -->
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="apple" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Premium Smartphones</p>
         </div>
-        <div class="p-3 mt-3 rounded-bottom">
+        <div class="p-4 rounded-bottom">
           {% for i in object %}
-          <div class="row row-cols-1 row-cols-md-3 g-4">
+          <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
             {% for j in i%}
             {% if j.brand == 'iphone' %}
+                  {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
             <div class="col">
               <div class="card h-100 shadow border">
                 <img src="{{j.img}}" class="card-img-top" alt="...">
@@ -279,12 +320,12 @@
               </div>
             </div>
             {% endif%}
+            <form>
             {% endfor%}
           </div>
           {% endfor%}
       </div>
     </div>
-  </form>
 
   </main>
   <!--Main Navigation-->

@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from phone_app.models import mobile
+from phone_app.models import cart as cart_
 from django.db.models import Q
 from django.contrib.auth.models import User, auth
 from django.contrib import messages
@@ -7,6 +8,10 @@ from django.core.mail import send_mail
 from django.conf import settings
 import math, random
 from django.contrib.auth.hashers import make_password
+from phone_app.models import profile
+from datetime import datetime
+cart_ids=[]
+count_cart = 0
 
 # Create your views here.
 def home(request):
@@ -15,18 +20,66 @@ def home(request):
     vivo=mobile.objects.filter(Q(brand='vivo') |  Q(brand='redmi') | Q(brand='nokia'))[:5]
     plus=mobile.objects.filter(brand='plus')
     iphone=mobile.objects.filter(brand='iphone')
-    
+
     lst_mobiles=[]
     lst_mobiles.append(realme)
     lst_mobiles.append(oppo)
     lst_mobiles.append(vivo)
     lst_mobiles.append(iphone)
     lst_mobiles.append(plus)
+    
+    if request.user.id != None:
+        data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
 
-    return render(request,'index.html',{'object':lst_mobiles})
+        global count_cart
+        count_cart=len(data)
 
-def cart(request):
-    return render(request,'cart.html')
+    context={
+        'object':lst_mobiles,
+        'count_cart':[count_cart]
+    }
+
+    return render(request,'index.html',context)
+
+def cart(request,id=0):
+    global count_cart
+    if request.method=="POST":
+        user_id=request.user
+        product_id=id
+        # print("id",user_id)
+        # print("product",product_id)
+
+        now=datetime.today().date()
+        cart_ids.append(product_id)
+        for i in cart_ids:
+            if not cart_.objects.filter(Q(user=user_id) &  Q(product=i)).exists():
+                # print(i)
+                ref=mobile(id=i)
+                products=cart_(user=user_id,product=ref,is_order=False,quantity=1,date=now)
+                products.save()
+
+        data=cart_.objects.filter(Q(user=user_id) & Q(is_order=False)).select_related('product')
+
+        count_cart=len(data)
+
+        context={
+            'data':data,
+            'count_cart':[count_cart]
+        }
+
+        # print(cart_ids)
+        return render(request,'cart.html',context)
+    else:
+        data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
+
+        # global count_cart
+        count_cart=len(data)
+
+        context={
+            'data':data,
+            'count_cart':[count_cart]
+        }
+        return render(request,'cart.html',context)
 
 
 def login(request):
@@ -38,6 +91,8 @@ def login(request):
 
         if user is not None:
             auth.login(request,user)
+            global cart_ids
+            cart_ids=[]
             return redirect("/")
         else:
             messages.error(request,'Username or Password incorret')
@@ -61,6 +116,9 @@ def register(request):
                 if not User.objects.filter(email=email).exists():
                     user=User.objects.create_user(username=u_name,password=passw,first_name=name,email=email)
                     user.save()
+                    auth.login(request,user)
+                    global cart_ids
+                    cart_ids=[]
                     return redirect("/")
                 else:
                     messages.warning(request,'Email already exist...')
@@ -75,6 +133,40 @@ def register(request):
 def logout(request):
     auth.logout(request)
     return redirect("/")
+
+def remove(request):
+    if request.method == 'POST':
+       prd_id=request.POST['prd_id']
+       ref=mobile(id=prd_id)
+       cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user))
+       cart_remove.delete()
+
+    data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
+    count_cart=len(data)
+
+    context={
+        'data':data,
+        'count_cart':[count_cart]
+    }
+    return render(request,'cart.html',context)
+
+def clear(request):
+    if request.method == "POST":
+       cart_remove=cart_.objects.filter(user=request.user)
+       cart_remove.delete()
+
+       data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False))
+       count_cart=len(data)
+
+       context={
+        'data':data,
+        'count_cart':[count_cart]
+        }
+
+       return render(request,'cart.html',context)
+        
+    else:
+        return redirect("/")
 
 def email(request):
     if request.method=="POST":
@@ -119,13 +211,17 @@ def forgot(request):
 def reset(request):
     if request.method == 'POST':
         otp=request.POST['otp']
-        user_otp=request.POST['user_otp']   
+        user_otp=request.POST['user_otp'] 
         email=request.POST['email']   
         if(otp == user_otp):
             return render(request,'reset.html',{'email':[email]})          
         else:
             messages.error(request,"Wrong OTP")
-            return render(request,'otp.html')
+            context={
+                'email':[email],
+                'otp':[user_otp]
+            }
+            return render(request,'otp.html',context)
     
     else:
         return redirect('/')
@@ -134,19 +230,17 @@ def password(request):
     if request.method == 'POST':
         passwd=request.POST['pass']
         cpasswd=request.POST['cpass']
-        email=request.POST['email']
-        print(type(passwd))
-        print(type(cpasswd))
-        print(email)
+        emails=request.POST['emails']
 
         if(passwd == cpasswd):
-            user=User.objects.get(email=email)
+            user=User.objects.get(email=emails)
             if user is not None:
                 user.password=make_password(passwd)
-                user.first_name="parthivv"
                 user.save()
 
                 auth.login(request,user)
+                global cart_ids
+                cart_ids=[]
 
                 return redirect("/")
             else:
@@ -154,6 +248,6 @@ def password(request):
                 return redirect('reset')
         else:
             messages.error(request,"password not matches")
-            return render(request,'reset.html')
+            return render(request,'reset.html',{'email':[emails]})
     else:
         return redirect("/")
