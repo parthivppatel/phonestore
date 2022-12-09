@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect
+from django.shortcuts import render,redirect,HttpResponseRedirect
 from phone_app.models import mobile
 from phone_app.models import cart as cart_
 from django.db.models import Q
@@ -8,8 +8,9 @@ from django.core.mail import send_mail
 from django.conf import settings
 import math, random
 from django.contrib.auth.hashers import make_password
-from phone_app.models import profile
+from phone_app.models import profile ,orders,card
 from datetime import datetime
+from django.urls import reverse
 cart_ids=[]
 count_cart = 0
 
@@ -17,8 +18,8 @@ count_cart = 0
 def home(request):
     realme=mobile.objects.filter(brand='realme')
     oppo=mobile.objects.filter(brand='oppo')
-    vivo=mobile.objects.filter(Q(brand='vivo') |  Q(brand='redmi') | Q(brand='nokia'))[:5]
-    plus=mobile.objects.filter(brand='plus')
+    vivo=mobile.objects.filter(Q(brand='vivo') |  Q(brand='redmi') | Q(brand='nokia') | Q(brand='plus'))
+    # plus=mobile.objects.filter(brand='plus')
     iphone=mobile.objects.filter(brand='iphone')
 
     lst_mobiles=[]
@@ -26,7 +27,7 @@ def home(request):
     lst_mobiles.append(oppo)
     lst_mobiles.append(vivo)
     lst_mobiles.append(iphone)
-    lst_mobiles.append(plus)
+    # lst_mobiles.append(plus)
     
     if request.user.id != None:
         data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
@@ -39,20 +40,325 @@ def home(request):
         'count_cart':[count_cart]
     }
 
-    return render(request,'index.html',context)
+    return render(request,'index.html',context) 
+
+def prof(request):
+    if request.method== "POST":
+        
+        uname=request.POST['user']
+        fname=request.POST['fname']
+        email=request.POST['email']
+        phone=request.POST['phone']
+        pincode=request.POST['pincode']
+        landmark=request.POST['landmark']
+        city=request.POST['city']
+        flat=request.POST['flat']
+        area=request.POST['area']
+        country=request.POST['country']
+        state=request.POST['state']
+
+        check_uname=User.objects.filter(username=uname).exclude(username=uname,id=request.user.id)
+        data=profile.objects.filter(user=request.user)
+        
+        if not check_uname:
+            check_email=User.objects.filter(email=email).exclude(email=email,id=request.user.id)
+            if not check_email:
+                check_phone=profile.objects.filter(phone=phone).exclude(phone=phone,user=request.user)
+                if not check_phone:
+                   data=profile.objects.get(user=request.user)
+                   data.phone=phone
+                   data.landmark=landmark
+                   data.city=city
+                   data.flat=flat
+                   data.area=area
+                   data.state=state
+                   data.country=country 
+                   data.pincode=pincode 
+                   data.save()    
+
+                   user_data=User.objects.get(id=request.user.id)
+                   user_data.username=uname
+                   user_data.first_name=fname
+                   user_data.email=email
+                   user_data.save()
+
+                   return redirect("/")
+                else:
+                    messages.warning(request,'Phone no alreay exist...')
+                    return render(request,'profile.html',{'data':data})
+            else:
+                messages.warning(request,'Email already exist...')
+                return render(request,'profile.html',{'data':data})
+
+            
+        else:
+            messages.warning(request,'Username already exist...')
+            return render(request,'profile.html',{'data':data})
+            
+    else:
+       
+       data=profile.objects.filter(user=request.user).select_related('user')
+
+       return render(request,'profile.html',{'data':data})
+
+def next(request):
+    global count_cart
+    if request.method == "POST":
+        for i in request.POST:
+            if i != "csrfmiddlewaretoken":
+                # print(i)
+                name=i.split("_")[0]
+                if(name=="quantity"):
+                   prod_id=i.split("_")[1]
+                   prod_q=request.POST[f"quantity_{prod_id}"]
+                    
+                   if int(prod_q)>1:
+                       ref=mobile(id=prod_id)
+                       quan_ad=cart_.objects.get(product=ref)
+                       quan_ad.quantity=prod_q
+                       quan_ad.save()
+                  
+                   ref=mobile(id=prod_id)
+                   sub=cart_.objects.filter(Q(product=ref) & Q (user=request.user) & Q(is_order= False)).select_related('product')  
+
+                #    print(len(sub))      
+
+                   for i in sub:
+                      subtotal=i.product.price*int(prod_q)
+                    #   ref=mobile(id=prod_id)
+                      obj=cart_.objects.get(Q(product=ref) & Q (user=request.user) & Q(is_order= False))
+                      obj.subtotal=subtotal
+                      obj.save()
+
+                    
+                elif(name=="delete"):
+                    prod_id=i.split("_")[1]
+                    prod_q=request.POST[f"delete_{prod_id}"]
+
+                #    print("-----------------------------delete ",prod_id,prod_q)
+                   
+                    if prod_q=="true":
+                        global cart_ids
+                        ref=mobile(id=prod_id)
+                        cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user))
+                        cart_remove.delete()
+                      
+                    #   print("------prod_id",prod_id)
+                        if prod_id in cart_ids:
+                        #    print("done")
+                           cart_ids.remove(prod_id)
+                        #    print("remove",cart_ids)
+
+
+                        data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
+
+                        count_cart=len(data)
+
+                        context={
+                        'data':data,
+                        'count_cart':[count_cart]
+                        }
+
+        
+                        return render(request,'cart.html',context)          
+
+        
+        data=profile.objects.filter(user=request.user).select_related('user')
+        count_cart=len(data)
+
+
+        address=profile.objects.exclude(Q(Q(phone=None) | Q(phone="")) | Q(Q(country=None) | Q(country="")) | Q(Q(state=None) | Q(state=""))
+        | Q(Q(city=None) | Q(city="")) | Q(Q(area=None) | Q(area="")) | Q(Q(flat=None) | Q(flat="")))
+
+        
+        if not address:
+            return render(request,'address.html',context)
+
+        else:
+            total=0   
+            count=0
+
+            order_data=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
+            for i in order_data:
+                temp=int(i.subtotal)
+                total+=temp
+                count+=1
+
+            subtotal=total
+
+            context={
+                'order_data':order_data,
+                'total':[total+40],
+                'subtotal':[subtotal],
+                'count':[count]
+            }
+
+            return render(request,"order.html",context)
+
+
+    else:   
+        return redirect("/")
+
+
+def order(request):
+    if request.method== "POST":
+        
+        phone=request.POST['phone']
+        pincode=request.POST['pincode']
+        landmark=request.POST['landmark']
+        city=request.POST['city']
+        flat=request.POST['flat']
+        area=request.POST['area']
+        country=request.POST['country']
+        state=request.POST['state']
+
+        check_phone=profile.objects.filter(phone=phone).exclude(phone=phone,user=request.user)
+        if not check_phone:
+            data=profile.objects.get(user=request.user)
+            data.phone=phone
+            data.landmark=landmark
+            data.city=city
+            data.flat=flat
+            data.area=area
+            data.state=state
+            data.country=country  
+            data.pincode=pincode
+            data.save()    
+
+            total=0        
+            count=0
+            
+            order_data=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
+            for i in order_data:
+                total+=i.subtotal
+                count+=1
+
+            subtotal=total
+
+            context={
+                'order_data':order_data,
+                'total':[total+40],
+                'subtotal':[subtotal],
+                'count':[count]
+            }
+           
+            return render(request,"order.html",context)
+            
+        else:
+            data=profile.objects.get(user=request.user)
+            messages.warning(request,'Phone no alreay exist...')
+            return render(request,'address.html',{'data':data})
+    
+
+def place(request):
+    if request.method == "POST":
+        name=request.POST['name']
+        number=request.POST['number']
+        expiry=request.POST['expiry']
+        cvv=request.POST['cvv']
+        
+        # print("......first",number)
+        check_number=card.objects.exclude(Q(number=number) & Q(user=request.user))
+        if  check_number:
+            data=card.objects.filter(user=request.user)   
+            if not data:
+                create=card(name=name,number=number,expiry=expiry,cvv=make_password(cvv),user=request.user)
+                create.save()
+
+            else:
+                data_update=card.objects.get(user=request.user)   
+                # print("......first",number)
+                data_update.name=name   
+                data_update.number=number   
+                data_update.expiry=expiry  
+                data_update.cvv=make_password(cvv)
+                data_update.save()
+        else:
+            messages.error(request,"card number already exist")
+            total=0   
+            count=0
+
+            order_data=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
+            for i in order_data:
+                total+=i.subtotal
+                count+=1
+
+            subtotal=total
+
+            context={
+                'order_data':order_data,
+                'total':[total+40],
+                'subtotal':[subtotal],
+                'count':[count]
+            }
+
+            return render(request,"order.html",context)
+        
+        now=datetime.today().date()
+        status='pending'
+         
+        
+
+        carts=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
+
+        for i in carts:
+            ref_cart=cart_(id=i.id)
+            ref_product=mobile(id=i.product.id)
+            check_order=orders.objects.filter(cart=ref_cart)
+            if not check_order:
+                order_data=orders(date=now,status=status,quantity=i.quantity,cart=ref_cart,product=ref_product,total=i.subtotal,user=request.user)
+                order_data.save()
+                is_order=cart_.objects.get(id=i.id)
+                is_order.is_order=True
+                is_order.save()
+                # print("==============",i.id)
+
+        # your_data=cart_.objects.filter(Q(user=request.user) & Q(is_order=True)).select_related('product')
+
+        # # global count_cart
+        # count_cart=len(your_data)
+
+        # context={
+        #     'data':data,
+        #     'count_cart':[count_cart]
+        # }
+        messages.success(request,"your order has been placed succesfully")
+        return HttpResponseRedirect(reverse('home'))
+
+    else:
+        return redirect("/")
+
+def your(request):
+        your_data=cart_.objects.filter(Q(user=request.user) & Q(is_order=True)).select_related('product')
+
+        # global count_cart
+        count_cart=len(your_data)
+
+        context={
+            'data':your_data,
+            'count_cart':[count_cart]
+        }
+        return render(request,'your_order.html',context)
+
 
 def cart(request,id=0):
     global count_cart
     if request.method=="POST":
         user_id=request.user
         product_id=id
+
         # print("id",user_id)
         # print("product",product_id)
 
         now=datetime.today().date()
         cart_ids.append(product_id)
+        # print("first",cart_ids)
         for i in cart_ids:
-            if not cart_.objects.filter(Q(user=user_id) &  Q(product=i)).exists():
+            # print("============+++++++++++++++++++",i)
+            ref=mobile(id=i)
+            # print(cart_.objects.filter(Q(user=request.user) &  Q(product=ref) & Q(is_order=False)))
+
+            if not cart_.objects.filter(Q(user=request.user) &  Q(product=ref) & Q(is_order=False)):
                 # print(i)
                 ref=mobile(id=i)
                 products=cart_(user=user_id,product=ref,is_order=False,quantity=1,date=now)
@@ -72,14 +378,13 @@ def cart(request,id=0):
     else:
         data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
 
-        # global count_cart
         count_cart=len(data)
 
         context={
             'data':data,
             'count_cart':[count_cart]
         }
-        return render(request,'cart.html',context)
+        return render(request,'your_order.html',context)
 
 
 def login(request):
@@ -132,23 +437,10 @@ def register(request):
 
 def logout(request):
     auth.logout(request)
+
+    global count_cart
+    count_cart=0
     return redirect("/")
-
-def remove(request):
-    if request.method == 'POST':
-       prd_id=request.POST['prd_id']
-       ref=mobile(id=prd_id)
-       cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user))
-       cart_remove.delete()
-
-    data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
-    count_cart=len(data)
-
-    context={
-        'data':data,
-        'count_cart':[count_cart]
-    }
-    return render(request,'cart.html',context)
 
 def clear(request):
     if request.method == "POST":
@@ -163,8 +455,9 @@ def clear(request):
         'count_cart':[count_cart]
         }
 
-       return render(request,'cart.html',context)
-        
+       global cart_ids
+       cart_ids=[]
+       return render(request,'cart.html',context) 
     else:
         return redirect("/")
 

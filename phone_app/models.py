@@ -25,8 +25,25 @@ class profile(models.Model):
     city=models.TextField(max_length=50,null=True)
 
 class cart(models.Model):
+    user= models.ForeignKey(User, null=True, on_delete=models.CASCADE)
+    product=models.ForeignKey(mobile,to_field='id',on_delete=models.CASCADE,null=True)
+    is_order=models.BooleanField(null=True)
+    quantity=models.IntegerField(null=True)
+    date=models.DateField(null=True)
+    subtotal=models.IntegerField(null=True)
+
+class orders(models.Model):
     user= models.ForeignKey(User, null=False, on_delete=models.CASCADE)
     product=models.ForeignKey(mobile,to_field='id',on_delete=models.CASCADE,null=True)
-    is_order=models.BooleanField()
-    quantity=models.IntegerField(null=True)
     date=models.DateField()
+    status=models.TextField()
+    quantity=models.IntegerField()
+    total=models.IntegerField()
+    cart=models.ForeignKey(cart,null=True,on_delete=models.CASCADE)
+
+class card(models.Model):
+    name=models.TextField()
+    number=models.TextField()
+    expiry=models.TextField()
+    cvv=models.TextField()
+    user=models.ForeignKey(User,on_delete=models.CASCADE)

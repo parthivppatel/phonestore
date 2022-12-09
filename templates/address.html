@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    {% load static%}
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css'%}">
+    <script src="{% static 'js/bootstrap.min.js'%}"></script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="sweetalert2.min.js"></script>
+    <link rel="stylesheet" href="sweetalert2.min.css">
+</head>
+<body>
+    {% for message in messages%}
+    <script>
+    Swal.fire(
+        '{{message.tags}}',
+        '{{message}}',
+        'error'
+        )
+    </script>
+    {% endfor %}
+    <div class="container rounded bg-white mt-5">
+        <div class="row">
+            <div class="col-md-5 mx-auto border" style="border-radius: 13px;">
+                <div class="p-3">
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <h4 class="text-right">Address</h4>
+                    </div>
+                    
+                    <form action="order" method="post">
+                    {%csrf_token%}
+                    {% for i in data%}
+
+                    <div class="row mt-3">
+                        <div class="col-md-12 mb-2"><label class="labels">Mobile Number</label><input type="number" class="form-control" placeholder="Enter phone number" required value="{{i.phone}}" name="phone" ></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Pincode</label><input type="number" class="form-control" placeholder="pincode" value="{{i.pincode}}" name="pincode"></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Area</label><input type="text" class="form-control" placeholder="Area" value="" name="area" required></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Landmark</label><input type="text" class="form-control" placeholder="Landmark" value="{{i.area}}" name="landmark"></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Flat</label><input type="text" class="form-control" placeholder="flat" value="{{i.flat}}" name="flat" required></div>
+                        <div class="col-md-12 mb-2"><label class="labels">City</label><input type="text" class="form-control" placeholder="City" value="{{i.city}}" name="city" required></div>
+                    </div>
+                    <div class="row mt-2">
+                        <div class="col-md-6"><label class="labels">Country</label><input type="text" name="country" class="form-control" placeholder="country" value="{{i.country}}" required></div>
+                        <div class="col-md-6"><label class="labels">State/Region</label><input type="text" name="state" class="form-control" value="{{i.state}}" placeholder="state" required></div>
+                    </div>
+                    {% endfor%}
+                    
+                       <div class="d-flex justify-content-between align-items-center mb-3">
+                       <a href="/" class="btn btn-secondary profile-button p-2 mt-4">Cancel</a>
+                       <button class="btn btn-success profile-button  p-2 mt-4" type="submit">Submit</button>
+                       </div>
+                    </form>
+                       <div>
+                    </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    </div>
+</body>
+<script>
+    window.setTimeout(function() {
+        $(".alert").fadeTo(500, 0).slideUp(500, function(){
+            $(this).remove(); 
+        });
+    }, 4000);
+
+</script>
+
+</html>

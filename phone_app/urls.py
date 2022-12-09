@@ -16,6 +16,10 @@ urlpatterns = [
     path('forgot',views.forgot,name='forgot'),
     path('reset',views.reset,name='reset'),
     path('password',views.password,name='password'),
-    path('delete',views.remove,name='remove'),
     path('clear',views.clear,name='clear'),
+    path('next',views.next,name='next'),
+    path('profile',views.prof,name='prof'),
+    path('order',views.order,name='order'),
+    path('place',views.place,name='place'),
+    path('your',views.your,name='your'),
 ]

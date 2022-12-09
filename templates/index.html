@@ -8,13 +8,25 @@
   <title>Document</title>
   <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
   <script src="{% static 'js/bootstrap.bundle.min.js'%}"></script>
-
+  <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+  <script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="sweetalert2.min.js"></script>
+  <link rel="stylesheet" href="sweetalert2.min.css">
 
   <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"></script> -->
 </head>
 
 <body>
+  {% for message in messages%}
+  <script>
+  Swal.fire(
+      '{{message.tags}}',
+      '{{message}}',
+      'success'
+      )
+  </script>
+  {% endfor %}
   <!--Main Navigation-->
   <header class="mb-5">
     <!-- Jumbotron -->
@@ -73,13 +85,18 @@
               <li class="nav-item dropdown">
                 <a href="login" class="nav-link dropdown" data-bs-toggle="dropdown"><img src="../static/images/user-interface.png" class="mt-1 mx-3" alt="" width="35" height="35"></a>
                 <ul class="dropdown-menu">
-                  <li><a class="dropdown-item" href="#"> Your Profile </a></li>
-                  <li><a class="dropdown-item" href="#"> Your Orders </a></li>
-                  <li><a class="dropdown-item" href="logout"> logout </a></li>
+                  {% if user.is_authenticated %}
+                  <li><a class="dropdown-item" href="profile" style="background-color: #232f3e; color:white;">Hello,{{user.first_name}}</a></li>
+                  <li><a class="dropdown-item" href="your"> Your Orders </a></li>
+                  <li><a class="dropdown-item" href="logout">logout</a></li>
+                  {% else %}
+                  <li><a class="dropdown-item" href="login">Sign in</a></li>
+                  {% endif %}
                 </ul>
               </li>
             </ul>
           </div>
+          
 
         </div>
       </div>
@@ -172,7 +189,7 @@
         </div>
           <div class="p-3 mt-3 rounded-bottom">
           {% for i in object %}
-            <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+            <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
               {% for j in i%}
                {% if j.brand == 'oppo' %}
                   {% if user.is_authenticated %}
@@ -206,18 +223,85 @@
           {%endfor%}
           </div>
       </div>
+      {% comment %} <div class="p-3 rounded-bottom">
+        {% for i in object %}
+        {% for j in i%}
+        {% if j.brand == 'vivo' or j.brand == 'nokia' or j.brand == 'redmi' %}
+              {% if user.is_authenticated %}
+              <form action="cart/{{j.id}}" method="post">
+              {%else%}
+              <form action="login">
+              {% endif%}
+              {% csrf_token %}
+        <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+          <div class="col">
+            <div class="card h-100 shadow border">
+              <img src="{{j.img}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h6 class="card-title fs-4">{{j.name}}</h6>
+                <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                  ₹{{j.price}}/-<br></P>
+                 <P>
+                  &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                </p> 
+                <p class="card-text">
+                 {{j.description}}</p>
+              </div>
+              <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
+                Cart</button></div>
+            </div>
+          </div>
+          <form>
+          </div>
+          {% endif%}
+          {% endfor%}
+        
+        <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
+          {% for j in i%}
+          {% if j.brand == 'plus' %}
+          {% if user.is_authenticated %}
+                <form action="cart/{{j.id}}" method="post">
+                {%else%}
+                <form action="login">
+                {% endif%}
        
+                {% csrf_token %}
+          <div class="col">
+            <div class="card h-100 shadow border">
+              <img src="{{j.img}}" class="card-img-top" alt="...">
+              <div class="card-body">
+                <h6 class="card-title fs-4">{{j.name}}</h6>
+                <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                  ₹{{j.price}}/-<br></P>
+                 <P>
+                  &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                </p> 
+                <p class="card-text">
+                 {{j.description}}</p>
+              </div>
+              <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
+                Cart</button></div>
+            </div>
+          </div>
+        </form>
+          {% endif%}
+          {% endfor%}
+        </div>
+        {% endfor%}
+        
+      </div> {% endcomment %}
+      
       <!-- section 3 -->
       <div class="p-1 mt-5" style="background-color:#eff4f8">
         <!-- budget section -->
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="budget" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Budget Smartphones</p>
         </div>
-        <div class="p-3 rounded-bottom">
+        <div class="p-3 mt-3 rounded-bottom">
           {% for i in object %}
-          <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
-            {% for j in i%}
-            {% if j.brand == 'vivo' or j.brand == 'nokia' or j.brand == 'redmi' %}
+            <div class="row row-cols-1 row-cols-md-5 g-4 mb-4">
+              {% for j in i%}
+               {% if j.brand == "plus" or j.brand == "redmi" or j.brand == "nokia" or j.brand == "vivo" %}
                   {% if user.is_authenticated %}
                   <form action="cart/{{j.id}}" method="post">
                   {%else%}
@@ -225,62 +309,29 @@
                   {% endif%}
          
                   {% csrf_token %}
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="{{j.img}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h6 class="card-title fs-4">{{j.name}}</h6>
-                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
-                    ₹{{j.price}}/-<br></P>
-                   <P>
-                    &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
-                  </p> 
-                  <p class="card-text">
-                   {{j.description}}</p>
+              <div class="col">
+                <div class="card h-100 shadow border">
+                  <img src="{{j.img}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h6 class="card-title fs-4">{{j.name}}</h6>
+                    <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                      ₹{{j.price}}/-<br></P>
+                     <P>
+                      &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                    </p> 
+                    <p class="card-text">
+                     {{j.description}}</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
+                    Cart</button></div>
                 </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
-                  Cart</button></div>
               </div>
+                 </form>
+               {% endif %} 
+              {%endfor%}
             </div>
-            {% endif%}
-            <form>
-            {% endfor%}
+          {%endfor%}
           </div>
-          
-          <div class="row row-cols-1 row-cols-md-4 g-4 mb-4">
-            {% for j in i%}
-            {% if j.brand == 'plus' %}
-            {% if user.is_authenticated %}
-                  <form action="cart/{{j.id}}" method="post">
-                  {%else%}
-                  <form action="login">
-                  {% endif%}
-         
-                  {% csrf_token %}
-            <div class="col">
-              <div class="card h-100 shadow border">
-                <img src="{{j.img}}" class="card-img-top" alt="...">
-                <div class="card-body">
-                  <h6 class="card-title fs-4">{{j.name}}</h6>
-                  <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
-                    ₹{{j.price}}/-<br></P>
-                   <P>
-                    &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
-                  </p> 
-                  <p class="card-text">
-                   {{j.description}}</p>
-                </div>
-                <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
-                  Cart</button></div>
-              </div>
-            </div>
-          </form>
-            {% endif%}
-            {% endfor%}
-          </div>
-          {% endfor%}
-          
-        </div>
 
       </div>
 
@@ -290,9 +341,9 @@
         <div class="mt-2">
           <p class="fw-bold fs-3 ms-4 text-start border-bottom d-inline border-info border-3" id="apple" style="font-color:#637381; line-height: 1.38; font-family: 'Open Sans', sans-serif;">Premium Smartphones</p>
         </div>
-        <div class="p-4 rounded-bottom">
-          {% for i in object %}
-          <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+        <div class="p-4 rounded-bottom mt-4">
+          {% comment %} {% for i in object %}
+          <div class="row row-cols-1 row-cols-md-4 g-4 mb-3">
             {% for j in i%}
             {% if j.brand == 'iphone' %}
                   {% if user.is_authenticated %}
@@ -300,7 +351,6 @@
                   {%else%}
                   <form action="login">
                   {% endif%}
-         
                   {% csrf_token %}
             <div class="col">
               <div class="card h-100 shadow border">
@@ -320,10 +370,44 @@
               </div>
             </div>
             {% endif%}
-            <form>
             {% endfor%}
           </div>
           {% endfor%}
+          <form> {% endcomment %}
+
+            {% for i in object %}
+            <div class="row row-cols-1 row-cols-md-3 g-4 mb-3">
+              {% for j in i%}
+               {% if j.brand == 'iphone' %}
+                  {% if user.is_authenticated %}
+                  <form action="cart/{{j.id}}" method="post">
+                  {%else%}
+                  <form action="login">
+                  {% endif%}
+         
+                  {% csrf_token %}
+              <div class="col">
+                <div class="card h-100 shadow border">
+                  <img src="{{j.img}}" class="card-img-top" alt="...">
+                  <div class="card-body">
+                    <h6 class="card-title fs-4">{{j.name}}</h6>
+                    <p class="fs-4 mt-3 fst-normal" style="font-weight:500">
+                      ₹{{j.price}}/-<br></P>
+                     <P>
+                      &#10003; {{j.os}}<br>&#10003; {{j.network}}<br>&#10003; {{j.ram}}<br>&#10003;{{j.display}}
+                    </p> 
+                    <p class="card-text">
+                     {{j.description}}</p>
+                  </div>
+                  <div class="card-footer bg-transparent border-0 pb-3"> <button class="btn btn-primary d-flex mx-auto" type="submit">Add To
+                    Cart</button></div>
+                </div>
+              </div>
+                 </form>
+               {% endif %} 
+              {%endfor%}
+            </div>
+          {%endfor%}
       </div>
     </div>
 
