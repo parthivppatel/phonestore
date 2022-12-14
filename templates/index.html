@@ -86,9 +86,11 @@
                 <a href="login" class="nav-link dropdown" data-bs-toggle="dropdown"><img src="../static/images/user-interface.png" class="mt-1 mx-3" alt="" width="35" height="35"></a>
                 <ul class="dropdown-menu">
                   {% if user.is_authenticated %}
-                  <li><a class="dropdown-item" href="profile" style="background-color: #232f3e; color:white;">Hello,{{user.first_name}}</a></li>
+                  <li><a class="dropdown-item" href="profile" style="background-color: #232f3e; color:white;">Hello, {{user.first_name}}</a></li>
                   <li><a class="dropdown-item" href="your"> Your Orders </a></li>
                   <li><a class="dropdown-item" href="logout">logout</a></li>
+                  <li><a class="dropdown-item" href="delete">Delete Account</a></li>
+
                   {% else %}
                   <li><a class="dropdown-item" href="login">Sign in</a></li>
                   {% endif %}
@@ -420,27 +422,27 @@
       <!-- Section: Social media -->
       <section class="mb-2">
         <!-- Facebook -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        <a class="btn btn-outline btn-floating" href="https://www.facebook.com/profile.php?id=100055649646707" target="_blank"role="button"
           ><img src="../static/images/facebook.png" alt="" width="40"></a>
   
         <!-- Twitter -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
-        ><img src="../static/images/twitter.png" alt="" width="40"></a></a>
+        <a class="btn btn-outline btn-floating" href="https://twitter.com/" target="_blank"role="button"
+        ><img src="../static/images/twitter.png" alt="" width="40" ></a></a>
   
         <!-- whatspp -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        <a class="btn btn-outline btn-floating" href="https://web.whatsapp.com/" target="_blank" role="button"
         ><img src="../static/images/whatsapp.png" alt="" width="40"></a></a>
   
         <!-- Instagram -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
-        ><img src="../static/images/instagram.png" alt="" width="40"></a></a>
+        <a class="btn btn-outline btn-floating" href="https://www.instagram.com/parthivpatel_09/?next=%2F" target="_blank" role="button"
+        ><img src="../static/images/instagram.png" alt="" width="40" ></a></a>
   
         <!-- Linkedin -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        <a class="btn btn-outline btn-floating" href="https://www.linkedin.com/in/parthiv-patel-71941822a/" role="button" target="_blank"
         ><img src="../static/images/linkedin.png" alt="" width="40"></a></a>
   
         <!-- Github -->
-        <a class="btn btn-outline btn-floating" href="#!" role="button"
+        <a class="btn btn-outline btn-floating" href="https://github.com/parthivppatel/phonestore" role="button" target="_blank"
         ><img src="../static/images/github.png" alt="" width="40"></a></a>
       </section>
       <!-- Section: Social media -->

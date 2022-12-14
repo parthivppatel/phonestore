@@ -22,4 +22,5 @@ urlpatterns = [
     path('order',views.order,name='order'),
     path('place',views.place,name='place'),
     path('your',views.your,name='your'),
+    path('delete',views.delete,name='delete'),
 ]

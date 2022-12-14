@@ -15,8 +15,8 @@ class mobile(models.Model):
 
 class profile(models.Model):
     user=models.OneToOneField(User,on_delete=models.CASCADE)
-    phone=models.TextField(max_length=10,null=False)
-    pincode=models.IntegerField(null=True)
+    phone=models.TextField(max_length=10,null=True)
+    pincode=models.TextField(null=True,max_length=10)
     country=models.TextField(max_length=10,null=True)
     flat=models.TextField(max_length=100,null=True)
     area=models.TextField(max_length=150,null=True)

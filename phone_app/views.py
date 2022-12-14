@@ -42,6 +42,19 @@ def home(request):
 
     return render(request,'index.html',context) 
 
+def delete(request):
+    if request.user.id!=None:
+        global cart_ids,count_cart
+        cart_ids=[]
+        count_cart=0
+        user=User.objects.filter(id=request.user.id)
+        user.delete()
+        auth.logout(request)
+        messages.success(request,"Account Deleted Succesfully")
+        return HttpResponseRedirect(reverse('home'))
+
+    return redirect("/")
+
 def prof(request):
     if request.method== "POST":
         
@@ -82,7 +95,8 @@ def prof(request):
                    user_data.email=email
                    user_data.save()
 
-                   return redirect("/")
+                   messages.success(request,"Profile Updated Succesfully")
+                   return HttpResponseRedirect(reverse('home'))
                 else:
                     messages.warning(request,'Phone no alreay exist...')
                     return render(request,'profile.html',{'data':data})
@@ -95,11 +109,14 @@ def prof(request):
             messages.warning(request,'Username already exist...')
             return render(request,'profile.html',{'data':data})
             
-    else:
-       
-       data=profile.objects.filter(user=request.user).select_related('user')
+    else:    
+        if(request.user.id!=None): 
+            data=profile.objects.filter(user=request.user).select_related('user')
 
-       return render(request,'profile.html',{'data':data})
+            return render(request,'profile.html',{'data':data})
+        else:
+            return redirect("/")
+    
 
 def next(request):
     global count_cart
@@ -142,12 +159,15 @@ def next(request):
                         ref=mobile(id=prod_id)
                         cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user))
                         cart_remove.delete()
-                      
-                    #   print("------prod_id",prod_id)
-                        if prod_id in cart_ids:
-                        #    print("done")
-                           cart_ids.remove(prod_id)
+                        
+                        prod_id=int(prod_id)
+                        # print("------prod_id",prod_id)
+                        for i in cart_ids:
+                           if prod_id==i:
+                            #   print("i",i)
+                              cart_ids.remove(prod_id)
                         #    print("remove",cart_ids)
+                        # print("---------",cart_ids)
 
 
                         data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
@@ -167,12 +187,14 @@ def next(request):
         count_cart=len(data)
 
 
-        address=profile.objects.exclude(Q(Q(phone=None) | Q(phone="")) | Q(Q(country=None) | Q(country="")) | Q(Q(state=None) | Q(state=""))
-        | Q(Q(city=None) | Q(city="")) | Q(Q(area=None) | Q(area="")) | Q(Q(flat=None) | Q(flat="")))
+        address=profile.objects.filter(Q(Q(phone=None) | Q(phone="") |( Q(country=None) | Q(country="")) | Q(state=None) | Q(state="")
+        | Q(city=None) | Q(city="") | Q(area=None) | Q(area="") | Q(flat=None) | Q(flat=""))& Q(user=request.user))
 
-        
-        if not address:
-            return render(request,'address.html',context)
+        if address:
+            data_=profile.objects.filter(user=request.user).select_related('user')
+ 
+            # print("----------",i)
+            return render(request,'address.html',{'data':data_})
 
         else:
             total=0   
@@ -245,9 +267,12 @@ def order(request):
             return render(request,"order.html",context)
             
         else:
-            data=profile.objects.get(user=request.user)
+            data_=profile.objects.filter(user=request.user).select_related('user')
             messages.warning(request,'Phone no alreay exist...')
-            return render(request,'address.html',{'data':data})
+            return render(request,'address.html',{'data':data_})
+
+    else:
+        return redirect("/")
     
 
 def place(request):
@@ -258,8 +283,8 @@ def place(request):
         cvv=request.POST['cvv']
         
         # print("......first",number)
-        check_number=card.objects.exclude(Q(number=number) & Q(user=request.user))
-        if  check_number:
+        check_number=card.objects.exclude(user=request.user).filter(number=number)
+        if not check_number:
             data=card.objects.filter(user=request.user)   
             if not data:
                 create=card(name=name,number=number,expiry=expiry,cvv=make_password(cvv),user=request.user)
@@ -322,6 +347,8 @@ def place(request):
         #     'data':data,
         #     'count_cart':[count_cart]
         # }
+        global cart_ids
+        cart_ids=[]
         messages.success(request,"your order has been placed succesfully")
         return HttpResponseRedirect(reverse('home'))
 
@@ -329,16 +356,19 @@ def place(request):
         return redirect("/")
 
 def your(request):
-        your_data=cart_.objects.filter(Q(user=request.user) & Q(is_order=True)).select_related('product')
+        if(request.user.id!=None):
+            your_data=cart_.objects.filter(Q(user=request.user) & Q(is_order=True)).select_related('product')
 
-        # global count_cart
-        count_cart=len(your_data)
+            # global count_cart
+            count_cart=len(your_data)
 
-        context={
-            'data':your_data,
-            'count_cart':[count_cart]
-        }
-        return render(request,'your_order.html',context)
+            context={
+              'data':your_data,
+              'count_cart':[count_cart]
+            }
+            return render(request,'your_order.html',context)
+        else:
+            return redirect("/")
 
 
 def cart(request,id=0):
@@ -349,10 +379,10 @@ def cart(request,id=0):
 
         # print("id",user_id)
         # print("product",product_id)
-
+        # print(cart_ids," before cart_ids")
         now=datetime.today().date()
         cart_ids.append(product_id)
-        # print("first",cart_ids)
+        # print("afterS=",cart_ids)
         for i in cart_ids:
             # print("============+++++++++++++++++++",i)
             ref=mobile(id=i)
@@ -376,15 +406,19 @@ def cart(request,id=0):
         # print(cart_ids)
         return render(request,'cart.html',context)
     else:
-        data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
+        if(request.user.id!=None):
+            data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False)).select_related('product')
 
-        count_cart=len(data)
+            count_cart=len(data)
 
-        context={
-            'data':data,
-            'count_cart':[count_cart]
-        }
-        return render(request,'your_order.html',context)
+            context={
+              'data':data,
+              'count_cart':[count_cart]
+            }
+            return render(request,'your_order.html',context)
+
+        else:
+            return redirect("/")
 
 
 def login(request):
@@ -420,7 +454,9 @@ def register(request):
             if not User.objects.filter(username=u_name).exists():
                 if not User.objects.filter(email=email).exists():
                     user=User.objects.create_user(username=u_name,password=passw,first_name=name,email=email)
+                    profile_=profile(user=user,area='',phone='',country='',state='',city='',flat='',landmark='',pincode='')
                     user.save()
+                    profile_.save()
                     auth.login(request,user)
                     global cart_ids
                     cart_ids=[]
@@ -444,7 +480,7 @@ def logout(request):
 
 def clear(request):
     if request.method == "POST":
-       cart_remove=cart_.objects.filter(user=request.user)
+       cart_remove=cart_.objects.filter(Q(user=request.user) & Q(is_order=False))
        cart_remove.delete()
 
        data=cart_.objects.filter(Q(user=request.user) & Q(is_order=False))
@@ -465,8 +501,10 @@ def email(request):
     if request.method=="POST":
         email=request.POST['email']
         name="Recovery Account"
-
-        if email != "" and email is not None:
+        
+        check=User.objects.filter(email=email)
+        if check:
+          if email != "" and email is not None:
             digits = "0123456789"
             OTP = ""
 
@@ -490,7 +528,7 @@ def email(request):
             }
             return render(request,'otp.html',context)
         
-        messages.error(request,"Please Enter valid Email")
+        messages.error(request,"User Not Found")
         return render(request,"forgot.html")
 
     else:
@@ -507,6 +545,7 @@ def reset(request):
         user_otp=request.POST['user_otp'] 
         email=request.POST['email']   
         if(otp == user_otp):
+            messages.success(request,'OTP matches succesfully')
             return render(request,'reset.html',{'email':[email]})          
         else:
             messages.error(request,"Wrong OTP")
@@ -534,8 +573,9 @@ def password(request):
                 auth.login(request,user)
                 global cart_ids
                 cart_ids=[]
-
-                return redirect("/")
+                
+                messages.success(request,"Password Updated Succesfully")
+                return HttpResponseRedirect(reverse('home'))
             else:
                 messages.error(request,"User Not Found")
                 return redirect('reset')
