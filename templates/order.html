@@ -91,7 +91,7 @@
                           <form class="mt-4" method="post" action="place">
                             {% csrf_token%}
                             <div class="form-outline form-white mb-4">
-                              <input type="text" id="typeName" class="form-control form-control-lg" size="17" name="name"
+                              <input type="text" id="typeName" class="form-control form-control-lg" size="17" name="name" maxlength="30"
                                 placeholder="Cardholder's Name" required/>
                               <label class="form-label" for="typeName">Cardholder's Name</label>
                             </div>

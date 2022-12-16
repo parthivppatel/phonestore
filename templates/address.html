@@ -36,8 +36,8 @@
                     {% for i in data%}
                     
                     <div class="row mt-3">
-                        <div class="col-md-12 mb-2"><label class="labels">Mobile Number</label><input type="number" class="form-control" placeholder="Enter phone number" required value="{{i.phone}}" min="2" max="12" name="phone" ></div>
-                        <div class="col-md-12 mb-2"><label class="labels">Pincode</label><input type="number" class="form-control" placeholder="pincode" value="{{i.pincode}}" name="pincode" min="2" max="8"></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Mobile Number</label><input type="number" class="form-control" placeholder="Enter phone number" required value="{{i.phone}}" min="10" name="phone" ></div>
+                        <div class="col-md-12 mb-2"><label class="labels">Pincode</label><input type="number" class="form-control" placeholder="pincode" value="{{i.pincode}}" name="pincode" min="6"></div>
                         <div class="col-md-12 mb-2"><label class="labels">Area</label><input type="text" class="form-control" placeholder="Area" value="{{i.area}}" name="area" required></div>
                         <div class="col-md-12 mb-2"><label class="labels">Landmark</label><input type="text" class="form-control" placeholder="Landmark" value="{{i.landmark}}" name="landmark"></div>
                         <div class="col-md-12 mb-2"><label class="labels">Flat</label><input type="text" class="form-control" placeholder="flat" value="{{i.flat}}" name="flat" required></div>

@@ -321,8 +321,8 @@ def place(request):
         
         now=datetime.today().date()
         status='pending'
-         
-        
+
+
 
         carts=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
 
@@ -366,7 +366,7 @@ def your(request):
               'data':your_data,
               'count_cart':[count_cart]
             }
-            return render(request,'your_order.html',context)
+            return render(request,'orders.html',context)
         else:
             return redirect("/")
 
