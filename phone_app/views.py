@@ -129,7 +129,7 @@ def next(request):
                    prod_id=i.split("_")[1]
                    prod_q=request.POST[f"quantity_{prod_id}"]
                     
-                   if int(prod_q)>1:
+                   if int(prod_q)>=1:
                        ref=mobile(id=prod_id)
                        quan_ad=cart_.objects.get(product=ref)
                        quan_ad.quantity=prod_q
