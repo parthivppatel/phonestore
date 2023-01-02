@@ -128,10 +128,13 @@ def next(request):
                 if(name=="quantity"):
                    prod_id=i.split("_")[1]
                    prod_q=request.POST[f"quantity_{prod_id}"]
+
+                #    print("....",prod_id)
                     
                    if int(prod_q)>=1:
                        ref=mobile(id=prod_id)
-                       quan_ad=cart_.objects.get(product=ref)
+                    #    print("------",ref)
+                       quan_ad=cart_.objects.get(Q(product=ref) & Q (user=request.user) & Q(is_order= False))
                        quan_ad.quantity=prod_q
                        quan_ad.save()
                   
@@ -157,7 +160,7 @@ def next(request):
                     if prod_q=="true":
                         global cart_ids
                         ref=mobile(id=prod_id)
-                        cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user))
+                        cart_remove=cart_.objects.filter(Q(product=ref) & Q (user=request.user) & Q(is_order=False))
                         cart_remove.delete()
                         
                         prod_id=int(prod_id)
@@ -281,23 +284,51 @@ def place(request):
         number=request.POST['number']
         expiry=request.POST['expiry']
         cvv=request.POST['cvv']
+        nums=["0","1","2","3","4","5","6","7","8","9"]
         
         # print("......first",number)
         check_number=card.objects.exclude(user=request.user).filter(number=number)
         if not check_number:
-            data=card.objects.filter(user=request.user)   
-            if not data:
-                create=card(name=name,number=number,expiry=expiry,cvv=make_password(cvv),user=request.user)
-                create.save()
+            check=False
+            for i in number:
+                # print("------i",i)
+                if i not in nums:
+                   check=True 
+            # print(check)
+            if check==True:
+                messages.error(request,"Please Enter Valid Card Number")
+                total=0   
+                count=0
 
+                order_data=cart_.objects.filter(Q(is_order=False) & Q(user=request.user)).select_related('product')
+                for i in order_data:
+                  total+=i.subtotal
+                  count+=1
+
+                subtotal=total
+
+                context={
+                  'order_data':order_data,
+                  'total':[total+40],
+                  'subtotal':[subtotal],
+                  'count':[count]
+                }
+
+                return render(request,"order.html",context)
             else:
-                data_update=card.objects.get(user=request.user)   
+                data=card.objects.filter(user=request.user)   
+                if not data:
+                  create=card(name=name,number=number,expiry=expiry,cvv=make_password(cvv),user=request.user)
+                  create.save()
+
+                else:
+                   data_update=card.objects.get(user=request.user)   
                 # print("......first",number)
-                data_update.name=name   
-                data_update.number=number   
-                data_update.expiry=expiry  
-                data_update.cvv=make_password(cvv)
-                data_update.save()
+                   data_update.name=name   
+                   data_update.number=number   
+                   data_update.expiry=expiry  
+                   data_update.cvv=make_password(cvv)
+                   data_update.save()
         else:
             messages.error(request,"card number already exist")
             total=0   
