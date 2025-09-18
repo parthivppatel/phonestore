@@ -13,7 +13,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 from pathlib import Path
 import os
 from dotenv import load_dotenv
-
+load_dotenv()
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -25,7 +25,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-v3^d97q6c)_nwtl(f4#6f-0!ba7*ve9-!r+bj&o5lt$s%w#y2h'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ['127.0.0.1','localhost']
 
@@ -142,3 +142,5 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER=os.getenv("EMAIL_HOST_USER")
 EMAIL_HOST_PASSWORD=os.getenv("EMAIL_HOST_PASSWORD")
 DEFAULT_CHARSET = 'utf-8'
+
+LOGIN_URL = 'login'
